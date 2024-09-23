@@ -1,16 +1,15 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Box } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import { Card, CardMedia, Typography, Box } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import AddToCartButton from './AddToCartBtn';
 
-interface ExclusiveDealCardProps {
+interface IFoodCardProps {
     title: string;
     description: string;
     price: string;
     originalPrice?: string;
     discount?: string;
     image: string;
-    onAddToCart: () => void;
 }
 
 export default function FoodCard({
@@ -20,8 +19,7 @@ export default function FoodCard({
     originalPrice,
     discount,
     image,
-    onAddToCart,
-}: ExclusiveDealCardProps) {
+}: IFoodCardProps) {
     return (
         <Card
             sx={{
@@ -31,7 +29,7 @@ export default function FoodCard({
                 overflow: 'hidden',
                 padding: 2,
                 boxShadow: 1,
-                backgroundColor: '#f9f9f9',
+                backgroundColor: '#ffffff',
                 position: 'relative',
                 '&:hover': {
                     boxShadow: 3,
@@ -46,7 +44,7 @@ export default function FoodCard({
                         position: 'absolute',
                         top: 10,
                         left: 10,
-                        backgroundColor: '#ff5722',
+                        backgroundColor: '#ff5722', // Discount color
                         color: 'white',
                         padding: '0.5rem',
                         borderRadius: '4px',
@@ -58,8 +56,8 @@ export default function FoodCard({
             )}
 
             <Box sx={{ width: '100%' }}>
-                <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid size={5}>
+                <Grid container spacing={2}>
+                    <Grid item xs={5}>
                         <CardMedia
                             component="img"
                             sx={{ borderRadius: 1, width: '140px', height: '140px', objectFit: 'cover' }}
@@ -67,9 +65,7 @@ export default function FoodCard({
                             alt={title}
                         />
                     </Grid>
-
-                    {/* Text Section */}
-                    <Grid size={7}>
+                    <Grid item xs={7}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                             <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', mb: 1 }}>
                                 {title}
@@ -95,8 +91,6 @@ export default function FoodCard({
                                         </Typography>
                                     )}
                                 </Box>
-
-                                {/* Add To Cart Button */}
                                 <AddToCartButton />
                             </Box>
                         </Box>

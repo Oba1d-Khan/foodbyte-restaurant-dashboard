@@ -24,7 +24,7 @@ export default function FeaturedCard({ title, description, price, originalPrice,
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                        <Typography variant="h5" color="primary" fontWeight="bold">
+                        <Typography variant="h5" fontWeight="bold" sx={{ color: 'black' }}>
                             {price}
                         </Typography>
                         {originalPrice && (
@@ -36,6 +36,6 @@ export default function FeaturedCard({ title, description, price, originalPrice,
                     <AddToCartButton />
                 </Box>
             </CardContent>
-        </Card>
+        </Card >
     );
 }

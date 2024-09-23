@@ -75,7 +75,7 @@ export default function FoodCard({
                             </Typography>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box>
-                                    <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                    <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '1.1rem', color: 'black' }}>
                                         {price}
                                     </Typography>
                                     {originalPrice && (

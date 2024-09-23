@@ -7,8 +7,9 @@ const AddToCartButton: React.FC<ButtonProps> = (props) => {
         <Tooltip title="Add to Cart" arrow>
             <Button
                 variant="contained"
-                color="#388e3c"
                 sx={{
+                    backgroundColor: '#388e3c',
+                    color: 'white',
                     borderRadius: '50%',
                     minWidth: 48,
                     minHeight: 48,
@@ -16,7 +17,7 @@ const AddToCartButton: React.FC<ButtonProps> = (props) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     '&:hover': {
-                        backgroundColor: '#388e4d', // Darker shade on hover
+                        backgroundColor: '#388e4d',
                     },
                 }}
                 {...props} // Spread props to allow customization

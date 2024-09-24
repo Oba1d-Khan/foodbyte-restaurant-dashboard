@@ -19,16 +19,16 @@ const sections = [
 
 const scrollbarStyles = {
     '&::-webkit-scrollbar': {
-        width: '8px', // Width of the scrollbar
+        width: '6px', 
     },
     '&::-webkit-scrollbar-track': {
-        background: '#f5f5f5', // Background of the track
+        background: '#a1f7a5',
     },
     '&::-webkit-scrollbar-thumb': {
-        backgroundColor: '#388e3c', // Color of the scrollbar thumb
-        borderRadius: '10px', // Roundness of the thumb
+        backgroundColor: '#388e3c',
+        borderRadius: '10px', 
         '&:hover': {
-            backgroundColor: '#3cbb47', // Color on hover
+            backgroundColor: '#3cbb47',
         },
     },
 };
@@ -49,7 +49,7 @@ export default function Navbar() {
                 overflowY: 'auto',
                 height: '100vh',
                 backgroundColor: '#f5f5f5',
-                ...scrollbarStyles, // Apply custom scrollbar styles
+                ...scrollbarStyles,
             }}
         >
             <Typography variant="h4" sx={{ mb: 2 }}>
@@ -60,9 +60,9 @@ export default function Navbar() {
                     <Card
                         key={section}
                         sx={{
-                            margin: 1,
-                            padding: 4,
-                            boxShadow: 2,
+                            margin: 2,
+                            padding: 2,
+                            boxShadow: 1    ,
                             '&:hover': {
                                 boxShadow: 4,
                                 transform: 'scale(1.02)',

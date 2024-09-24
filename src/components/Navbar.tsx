@@ -1,8 +1,37 @@
 'use client'
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItemButton, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, List, Box, Card } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
+const sections = [
+    'Burgers',
+    'Fries',
+    'Sandwiches',
+    'Special Rolls',
+    'Soup',
+    'BBQ',
+    'Milkshakes',
+    'Cold Coffee',
+    'Beverages',
+    'Lemonades',
+    'Extra'
+];
+
+const scrollbarStyles = {
+    '&::-webkit-scrollbar': {
+        width: '8px', // Width of the scrollbar
+    },
+    '&::-webkit-scrollbar-track': {
+        background: '#f5f5f5', // Background of the track
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: '#388e3c', // Color of the scrollbar thumb
+        borderRadius: '10px', // Roundness of the thumb
+        '&:hover': {
+            backgroundColor: '#3cbb47', // Color on hover
+        },
+    },
+};
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -12,13 +41,40 @@ export default function Navbar() {
     };
 
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', py: 2 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+        <Box
+            onClick={handleDrawerToggle}
+            sx={{
+                textAlign: 'center',
+                py: 2,
+                overflowY: 'auto',
+                height: '100vh',
+                backgroundColor: '#f5f5f5',
+                ...scrollbarStyles, // Apply custom scrollbar styles
+            }}
+        >
+            <Typography variant="h4" sx={{ mb: 2 }}>
                 FoodMart
             </Typography>
             <List>
-                <ListItemButton>DELIVERY</ListItemButton>
-                <ListItemButton>PICKUP</ListItemButton>
+                {sections.map((section) => (
+                    <Card
+                        key={section}
+                        sx={{
+                            margin: 1,
+                            padding: 4,
+                            boxShadow: 2,
+                            '&:hover': {
+                                boxShadow: 4,
+                                transform: 'scale(1.02)',
+                                transition: '0.3s',
+                            },
+                        }}
+                    >
+                        <Typography variant="body1" align="center">
+                            {section}
+                        </Typography>
+                    </Card>
+                ))}
             </List>
         </Box>
     );
@@ -30,19 +86,12 @@ export default function Navbar() {
                     <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle} sx={{ mr: 2 }}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h4" sx={{ flexGrow: 1 }}>
                         FoodMart
                     </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        <Button color="inherit">DELIVERY</Button>
-                        <Button color="inherit">PICKUP</Button>
-                    </Box>
-                    <IconButton color="inherit">
-                        <AddShoppingCartIcon />
-                    </IconButton>
                 </Toolbar>
             </AppBar>
-            <Drawer open={mobileOpen} onClose={handleDrawerToggle} sx={{ '& .MuiDrawer-paper': { width: 240 } }}>
+            <Drawer open={mobileOpen} onClose={handleDrawerToggle} sx={{ '& .MuiDrawer-paper': { width: 300 } }}>
                 {drawer}
             </Drawer>
         </>

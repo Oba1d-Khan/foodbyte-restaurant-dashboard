@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Box, Divider } from '@mui/material';
-import AddToCartButton from './AddToCartBtn';
+import AddToCartButton from './add-to-cart-btn';
 
 interface FeaturedDealCardProps {
     title: string;
@@ -10,7 +10,7 @@ interface FeaturedDealCardProps {
     image: string;
 }
 
-export default function FeaturedCard({ title, description, price, originalPrice, image }: FeaturedDealCardProps) {
+const FeaturedCard:React.FC<FeaturedDealCardProps> = ({ title, description, price, originalPrice, image }) => {
     return (
         <Card sx={{ backgroundColor: '#ffffff', borderRadius: 2, boxShadow: 3, '&:hover': { transform: 'translateY(-8px)', transition: 'transform 0.3s ease-in-out' } }}>
             <CardMedia component="img" height="300" image={image} alt={title} sx={{ objectFit: 'cover' }} />
@@ -39,3 +39,5 @@ export default function FeaturedCard({ title, description, price, originalPrice,
         </Card >
     );
 }
+
+export default FeaturedCard;

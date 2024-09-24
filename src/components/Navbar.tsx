@@ -33,7 +33,7 @@ const scrollbarStyles = {
     },
 };
 
-export default function Navbar() {
+const Navbar:React.FC = () =>  {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleDrawerToggle = () => {
@@ -97,3 +97,5 @@ export default function Navbar() {
         </>
     );
 }
+
+export default Navbar;

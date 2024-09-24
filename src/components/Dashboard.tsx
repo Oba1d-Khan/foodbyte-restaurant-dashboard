@@ -2,10 +2,10 @@ import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { featuredDeals, exclusiveDeals } from '../constants/deals';
-import FeaturedCard from './FeaturedCard';
-import FoodCard from './FoodCard';
+import FeaturedCard from './featured-card';
+import FoodCard from './food-card';
 
-export default function Dashboard() {
+const Dashboard:React.FC = () =>  {
     return (
         <Container maxWidth="lg" sx={{ mt: 6 }}>
             <Typography
@@ -55,3 +55,5 @@ export default function Dashboard() {
         </Container>
     );
 }
+
+export default Dashboard;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardMedia, Typography, Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import AddToCartButton from './AddToCartBtn';
+import AddToCartButton from './add-to-cart-btn';
 
 interface IFoodCardProps {
     title: string;
@@ -12,14 +12,14 @@ interface IFoodCardProps {
     image: string;
 }
 
-export default function FoodCard({
+const FoodCard:React.FC<IFoodCardProps> = ({
     title,
     description,
     price,
     originalPrice,
     discount,
     image,
-}: IFoodCardProps) {
+}) =>  {
     return (
         <Card
             sx={{
@@ -100,3 +100,5 @@ export default function FoodCard({
         </Card>
     );
 }
+
+export default FoodCard;

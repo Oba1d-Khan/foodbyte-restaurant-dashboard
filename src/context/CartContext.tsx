@@ -1,5 +1,5 @@
-'use client'
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+'use client';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 
 interface CartItem {
     title: string;
@@ -12,8 +12,7 @@ interface CartItem {
 interface CartContextType {
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
-    openCart: boolean;
-    setOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
+    clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -28,15 +27,29 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const [openCart, setOpenCart] = useState(false);
+
+    useEffect(() => {
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+            setCartItems(JSON.parse(storedCart));
+        }
+    }, []);
 
     const addToCart = (item: CartItem) => {
-        setCartItems((prevItems) => [...prevItems, item]);
-        setOpenCart(true);
+        setCartItems((prevItems) => {
+            const updatedCart = [...prevItems, item];
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
+
+    const clearCart = () => {
+        setCartItems([]);
+        localStorage.removeItem('cart');
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, openCart, setOpenCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, clearCart }}>
             {children}
         </CartContext.Provider>
     );

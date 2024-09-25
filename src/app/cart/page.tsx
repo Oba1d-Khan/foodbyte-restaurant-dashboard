@@ -6,12 +6,11 @@ import { useRouter } from 'next/navigation';
 import FoodCard from '@/components/food-card';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 const CartPage = () => {
-    const { cartItems, setOpenCart } = useCart();
+    const { cartItems } = useCart();
     const router = useRouter();
 
     const handleContinueShopping = () => {
         router.push('/');
-        setOpenCart(false);
     };
 
     return (

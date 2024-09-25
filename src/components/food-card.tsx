@@ -10,16 +10,18 @@ interface IFoodCardProps {
     originalPrice?: string;
     discount?: string;
     image: string;
+    showAddToCartButton?: boolean;
 }
 
-const FoodCard:React.FC<IFoodCardProps> = ({
+const FoodCard: React.FC<IFoodCardProps> = ({
     title,
     description,
     price,
     originalPrice,
     discount,
     image,
-}) =>  {
+    showAddToCartButton = true,
+}) => {
     return (
         <Card
             sx={{
@@ -44,7 +46,7 @@ const FoodCard:React.FC<IFoodCardProps> = ({
                         position: 'absolute',
                         top: 10,
                         left: 10,
-                        backgroundColor: '#ff5722', // Discount color
+                        backgroundColor: '#ff5722',
                         color: 'white',
                         padding: '0.5rem',
                         borderRadius: '4px',
@@ -91,7 +93,9 @@ const FoodCard:React.FC<IFoodCardProps> = ({
                                         </Typography>
                                     )}
                                 </Box>
-                                <AddToCartButton />
+                                {showAddToCartButton && (
+                                    <AddToCartButton title={title} price={price} image={image} description={description} />
+                                )}
                             </Box>
                         </Box>
                     </Grid>
@@ -99,6 +103,6 @@ const FoodCard:React.FC<IFoodCardProps> = ({
             </Box>
         </Card>
     );
-}
+};
 
 export default FoodCard;

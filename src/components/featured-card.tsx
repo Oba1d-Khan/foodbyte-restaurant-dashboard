@@ -10,7 +10,7 @@ interface FeaturedDealCardProps {
     image: string;
 }
 
-const FeaturedCard:React.FC<FeaturedDealCardProps> = ({ title, description, price, originalPrice, image }) => {
+const FeaturedCard: React.FC<FeaturedDealCardProps> = ({ title, description, price, originalPrice, image }) => {
     return (
         <Card sx={{ backgroundColor: '#ffffff', borderRadius: 2, boxShadow: 3, '&:hover': { transform: 'translateY(-8px)', transition: 'transform 0.3s ease-in-out' } }}>
             <CardMedia component="img" height="300" image={image} alt={title} sx={{ objectFit: 'cover' }} />
@@ -33,7 +33,7 @@ const FeaturedCard:React.FC<FeaturedDealCardProps> = ({ title, description, pric
                             </Typography>
                         )}
                     </Box>
-                    <AddToCartButton />
+                    <AddToCartButton title={title} price={price} image={image} description={description} />
                 </Box>
             </CardContent>
         </Card >

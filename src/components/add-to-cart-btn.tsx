@@ -1,8 +1,25 @@
+'use client'
 import React from 'react';
-import { Button, ButtonProps, Tooltip } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useCart } from '@/context/CartContext';
 
-const AddToCartButton: React.FC<ButtonProps> = (props) => {
+
+interface AddToCartButtonProps {
+    title: string;
+    price: string;
+    image: string;
+    description: string;
+    discount?: string;
+
+}
+const AddToCartButton: React.FC<AddToCartButtonProps> = ({ title, price, image, description, discount }) => {
+
+    const { addToCart } = useCart();
+
+    const handleAddToCart = () => {
+        addToCart({ title, price, image, description, discount });
+    };
     return (
         <Tooltip title="Add to Cart" arrow>
             <Button
@@ -20,7 +37,7 @@ const AddToCartButton: React.FC<ButtonProps> = (props) => {
                         backgroundColor: '#388e4d',
                     },
                 }}
-                {...props} // Spread props to allow customization
+                onClick={handleAddToCart}
             >
                 <AddIcon fontSize="small" />
             </Button>

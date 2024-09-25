@@ -34,7 +34,7 @@ const Dashboard:React.FC = () =>  {
                     variant="h4"
                     align="center"
                     sx={{
-                        bgcolor: '#388e3c', // Green
+                        bgcolor: '#388e3c', 
                         color: 'white',
                         py: 2,
                         borderRadius: 1,

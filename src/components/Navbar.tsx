@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
                 ...scrollbarStyles,
             }}
         >
-            <Typography variant="h4" sx={{ mb: 2 }}>
+            <Typography variant="h4" sx={{ mb: 2 }} color='#388e3c' fontWeight={'semibold'}>
                 FoodMart
             </Typography>
             <List>

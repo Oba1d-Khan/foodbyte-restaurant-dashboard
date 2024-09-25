@@ -12,6 +12,7 @@ interface CartItem {
 interface CartContextType {
     cartItems: CartItem[];
     addToCart: (item: CartItem) => void;
+    removeFromCart: (item: CartItem) => void;
     clearCart: () => void;
 }
 
@@ -43,13 +44,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
+    const removeFromCart = (itemToRemove: CartItem) => {
+        setCartItems((prevItems) => {
+            const updatedCart = prevItems.filter(item => item.title !== itemToRemove.title);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
+
     const clearCart = () => {
         setCartItems([]);
         localStorage.removeItem('cart');
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, clearCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     );

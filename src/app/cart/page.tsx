@@ -1,21 +1,33 @@
 'use client';
-import React from 'react';
-import { Box, Typography, Button, Container, Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Button, Container, Grid, CircularProgress, Divider } from '@mui/material';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
 import FoodCard from '@/components/food-card';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 const CartPage = () => {
-    const { cartItems } = useCart();
+    const { cartItems, clearCart, removeFromCart } = useCart();
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     const handleContinueShopping = () => {
         router.push('/');
     };
 
+    useEffect(() => {
+        if (cartItems.length > 0) {
+            setLoading(false);
+        } else {
+            setLoading(false);
+        }
+    }, [cartItems]);
+
     return (
-        <Container maxWidth="md">
-            <Box sx={{ mt: 8, mb: 4 }}>
+        <Container maxWidth="lg">
+            <Box sx={{ mt: 2, mb: 4 }}>
                 <Typography
                     variant="h4"
                     align="center"
@@ -30,8 +42,12 @@ const CartPage = () => {
                     Your Shopping Cart
                 </Typography>
             </Box>
-            <Box sx={{ mt: 4 }}>
-                {cartItems.length === 0 ? (
+            <Box sx={{ mt: 10 }}>
+                {loading ? (
+                    <Box display="flex" justifyContent="center" mt={4}>
+                        <CircularProgress />
+                    </Box>
+                ) : cartItems.length === 0 ? (
                     <Typography variant="h6" align="center">
                         Your cart is empty!
                     </Typography>
@@ -47,18 +63,41 @@ const CartPage = () => {
                                     discount={item.discount}
                                     showAddToCartButton={false}
                                 />
+                                <Box display="flex" justifyContent="space-between" mt={2}>
+                                    <Button
+                                        variant="outlined"
+                                        color="error"
+                                        onClick={() => removeFromCart(item)}
+                                        startIcon={<RemoveIcon />}
+                                    >
+                                        Remove
+                                    </Button>
+                                </Box>
                             </Grid>
                         ))}
                     </Grid>
                 )}
-                <Button
-                    sx={{ mt: 4, backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#555' } }}
-                    variant="contained"
-                    onClick={handleContinueShopping}
-                    startIcon={<ArrowBackIosIcon />}
-                >
-                    Continue Shopping
-                </Button>
+
+                <Divider sx={{ mt: 6 }} />
+
+                <Box display="flex" justifyContent="space-between" mt={4}>
+                    <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={clearCart}
+                        startIcon={<DeleteIcon />}
+                    >
+                        Clear Cart
+                    </Button>
+                    <Button
+                        sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: '#555' } }}
+                        variant="contained"
+                        onClick={handleContinueShopping}
+                        startIcon={<ArrowBackIosIcon />}
+                    >
+                        Continue Shopping
+                    </Button>
+                </Box>
             </Box>
         </Container>
     );

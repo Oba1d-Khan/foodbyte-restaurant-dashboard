@@ -14,10 +14,9 @@ import {
 } from "@mui/material";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
-import FoodCard from "@/components/food-card";
 import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import CartItemCard from "@/components/cart-item-card";
 
 type TItemProps = {
     title: string;
@@ -129,37 +128,17 @@ const CartPage = () => {
                     <Grid container spacing={3}>
                         {cartItems.map((item, index) => (
                             <Grid item xs={12} sm={6} key={index}>
-                                <Box sx={{ position: "relative" }}>
-                                    <FoodCard
-                                        title={item.title}
-                                        description={item.description}
-                                        price={item.price}
-                                        image={item.image}
-                                        discount={item.discount}
-                                        showAddToCartButton={false}
-                                    />
-                                    <Tooltip title="Remove from Cart">
-                                        <IconButton
-                                            sx={{
-                                                position: "absolute",
-                                                top: 10,
-                                                right: 10,
-                                                backgroundColor: "white",
-                                                color: "#d32f2f",
-                                                "&:hover": {
-                                                    backgroundColor: "#ffebee",
-                                                    scale: "1.1",
-                                                },
-                                            }}
-                                            onClick={() => handleRemoveFromCart(item)}
-                                        >
-                                            <RemoveCircleOutlineIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Box>
+                                <CartItemCard
+                                    title={item.title}
+                                    description={item.description}
+                                    price={item.price}
+                                    image={item.image}
+                                    onRemove={() => handleRemoveFromCart(item)}
+                                />
                             </Grid>
                         ))}
                     </Grid>
+
                 )}
 
                 <Divider sx={{ mt: 6 }} />

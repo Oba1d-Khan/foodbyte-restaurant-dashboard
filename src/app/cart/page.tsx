@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState, useEffect } from "react";
 import {
     Box,
@@ -9,6 +9,8 @@ import {
     Divider,
     IconButton,
     Tooltip,
+    Snackbar,
+    Alert,
 } from "@mui/material";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
@@ -17,14 +19,39 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+type TItemProps = {
+    title: string;
+    price: string;
+    image: string;
+    description: string;
+    discount?: string;
+}
+
 const CartPage = () => {
     const { cartItems, clearCart, removeFromCart } = useCart();
     const [loading, setLoading] = useState(true);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
     const router = useRouter();
-
 
     const handleGoBack = () => {
         router.push("/");
+    };
+
+    const handleClearCart = () => {
+        clearCart();
+        setSnackbarMessage("Cart cleared!");
+        setSnackbarOpen(true);
+    };
+
+    const handleRemoveFromCart = (item: TItemProps) => {
+        removeFromCart(item);
+        setSnackbarMessage(`${item.title} removed from cart!`);
+        setSnackbarOpen(true);
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
     };
 
     useEffect(() => {
@@ -81,7 +108,7 @@ const CartPage = () => {
                                 border: "1px solid #d32f2f",
                                 borderRadius: "500px",
                             }}
-                            onClick={clearCart}
+                            onClick={handleClearCart}
                         >
                             <DeleteIcon />
                         </IconButton>
@@ -107,7 +134,6 @@ const CartPage = () => {
                                         title={item.title}
                                         description={item.description}
                                         price={item.price}
-                                        // oldPrice={item.oldPrice} {/* Old price restored */}
                                         image={item.image}
                                         discount={item.discount}
                                         showAddToCartButton={false}
@@ -125,7 +151,7 @@ const CartPage = () => {
                                                     scale: "1.1",
                                                 },
                                             }}
-                                            onClick={() => removeFromCart(item)}
+                                            onClick={() => handleRemoveFromCart(item)}
                                         >
                                             <RemoveCircleOutlineIcon />
                                         </IconButton>
@@ -137,6 +163,17 @@ const CartPage = () => {
                 )}
 
                 <Divider sx={{ mt: 6 }} />
+
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
+                    <Alert onClose={handleSnackbarClose} severity="success">
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
             </Box>
         </Container>
     );

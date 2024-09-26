@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Drawer, List, Box, Card, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Link from 'next/link';
 
 const sections = [
@@ -92,6 +93,26 @@ const Navbar: React.FC = () => {
                         FoodMart
                     </Typography>
 
+                    <Link href="https://wa.me/+923151272630" passHref target="_blank">
+                        <Button
+                            sx={{
+                                backgroundColor: 'white',
+                                color: '#388e3c',
+                                '&:hover': {
+                                    backgroundColor: '#b4fab7',
+                                    scale: '1.1',
+                                },
+                                border: '1px solid #388e3c',
+                                borderRadius: '500px',
+                                mr: 2,
+                            }}
+                            variant="outlined"
+                            startIcon={<WhatsAppIcon sx={{ color: '#388e3c', }} />}
+                        >
+                            Chat Now
+                        </Button>
+                    </Link>
+
                     <Link href="/cart" passHref>
                         <Button
                             sx={{
@@ -110,7 +131,6 @@ const Navbar: React.FC = () => {
                         >
                         </Button>
                     </Link>
-
                 </Toolbar>
             </AppBar>
             <Drawer open={mobileOpen} onClose={handleDrawerToggle} sx={{ '& .MuiDrawer-paper': { width: 300 } }}>

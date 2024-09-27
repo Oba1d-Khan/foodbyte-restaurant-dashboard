@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Tooltip, Snackbar, Alert, Link, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { useCart } from '@/context/CartContext';
+import { useCart } from '@/src/context/CartContext';
 
 interface AddToCartButtonProps {
     title: string;
@@ -53,9 +53,9 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ title, price, image, 
 
             <Snackbar
                 open={snackbarOpen}
-                autoHideDuration={3000} 
+                autoHideDuration={3000}
                 onClose={handleSnackbarClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} 
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 
             >
                 <Alert

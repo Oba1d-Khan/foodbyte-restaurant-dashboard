@@ -122,7 +122,7 @@ const FoodCard: React.FC<IFoodCardProps> = ({
                         fontSize: "0.85rem",
                       }}
                     >
-                      {originalPrice}
+                      Rs. {originalPrice}
                     </Typography>
                   )}
                 </Box>

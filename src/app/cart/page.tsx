@@ -11,6 +11,7 @@ import {
   Tooltip,
   Snackbar,
   Alert,
+  Stack,
 } from "@mui/material";
 import { useCart } from "@/src/context/CartContext";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,7 @@ const CartPage = () => {
   useEffect(() => {
     console.log("Cart Items:", cartItems);
   }, [cartItems]);
+
   const handleGoBack = () => {
     router.push("/");
   };
@@ -40,7 +42,6 @@ const CartPage = () => {
   };
 
   const handleRemoveFromCart = (item: ICartItem) => {
-    // Use ICartItem type here
     removeFromCart(item);
     setSnackbarMessage(`${item.title} removed from cart!`);
     setSnackbarOpen(true);
@@ -56,90 +57,70 @@ const CartPage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ mt: 2, mb: 4 }}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          backgroundColor="#388e3c"
-          color={"white"}
-          py={2}
-          px={6}
-          borderRadius={2}
-        >
-          <Tooltip title="Go Back">
-            <IconButton
-              sx={{
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#4caf50",
-                  scale: "1.1",
-                },
-              }}
-              onClick={handleGoBack}
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
-          </Tooltip>
-
-          <Typography
-            variant="h4"
-            align="center"
-            sx={{
-              fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
-            }}
+      <Stack spacing={4} mt={2} mb={4}>
+        <Box bgcolor="success.main" color="white" py={2} borderRadius={2}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            px={6}
           >
-            Your Shopping Cart
-          </Typography>
+            <Tooltip title="Go Back">
+              <IconButton color="inherit" onClick={handleGoBack}>
+                <ArrowBackIosIcon />
+              </IconButton>
+            </Tooltip>
 
-          <Tooltip title="Clear Cart">
-            <IconButton
-              sx={{
-                backgroundColor: "white",
-                color: "#d32f2f",
-                "&:hover": {
-                  backgroundColor: "#ffebee",
-                  scale: "1.1",
-                },
-                border: "1px solid #d32f2f",
-                borderRadius: "500px",
-              }}
-              onClick={handleClearCart}
+            <Typography
+              variant="h4"
+              align="center"
+              fontSize={{ xs: "1.8rem", sm: "2.2rem", md: "2.5rem" }}
             >
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </Box>
+              Your Shopping Cart
+            </Typography>
 
-      <Box sx={{ mt: 10 }}>
-        {loading ? (
-          <Box display="flex" justifyContent="center" mt={4}>
-            <CircularProgress />
-          </Box>
-        ) : cartItems.length === 0 ? (
-          <Typography variant="h6" align="center">
-            Your cart is empty!
-          </Typography>
-        ) : (
-          <Grid container spacing={3}>
-            {cartItems.map(
-              (
-                item: ICartItem,
-                index // Use ICartItem here
-              ) => (
+            <Tooltip title="Clear Cart">
+              <IconButton
+                onClick={handleClearCart}
+                sx={{
+                  border: "1px solid",
+                  borderColor: "error.main",
+                  bgcolor: "white",
+                  "&:hover": {
+                    bgcolor: "error.light",
+                  },
+                }}
+              >
+                <DeleteIcon color="error" />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+        </Box>
+
+        <Box>
+          {loading ? (
+            <Box display="flex" justifyContent="center">
+              <CircularProgress />
+            </Box>
+          ) : cartItems.length === 0 ? (
+            <Typography variant="h6" align="center">
+              Your cart is empty!
+            </Typography>
+          ) : (
+            <Grid container spacing={3}>
+              {cartItems.map((item: ICartItem, index) => (
                 <Grid item xs={12} sm={6} key={index}>
                   <CartItemCard
-                    item={item} // Pass the whole item
+                    item={item}
                     onRemove={() => handleRemoveFromCart(item)}
                   />
                 </Grid>
-              )
-            )}
-          </Grid>
-        )}
+              ))}
+            </Grid>
+          )}
+        </Box>
 
-        <Divider sx={{ mt: 6 }} />
+        <Divider />
 
         <Snackbar
           open={snackbarOpen}
@@ -151,7 +132,7 @@ const CartPage = () => {
             {snackbarMessage}
           </Alert>
         </Snackbar>
-      </Box>
+      </Stack>
     </Container>
   );
 };

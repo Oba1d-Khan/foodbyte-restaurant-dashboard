@@ -1,5 +1,12 @@
 import React from "react";
-import { Card, CardMedia, Typography, Box, IconButton } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  Typography,
+  Box,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { ICartItem } from "@/src/types/ICartItem";
 
@@ -16,73 +23,49 @@ const CartItemCard: React.FC<ICartItemCardProps> = ({ item, onRemove }) => {
 
   return (
     <Card
+      variant="outlined"
       sx={{
         display: "flex",
         flexDirection: "row",
         borderRadius: 2,
         overflow: "hidden",
-        padding: 2,
-        boxShadow: 1,
-        backgroundColor: "#ffffff",
-        position: "relative",
-        "&:hover": {
-          boxShadow: 3,
-          transform: "translateY(-4px)",
-          transition: "transform 0.3s ease-in-out",
-        },
+        width: "100%",
       }}
     >
       <CardMedia
         component="img"
-        sx={{
-          borderRadius: 1,
-          width: "140px",
-          height: "140px",
-          objectFit: "cover",
-        }}
+        sx={{ width: "50%", height: 140, objectFit: "cover" }}
         image={item.image}
         alt={item.title}
       />
-      <Box sx={{ flexGrow: 1, paddingLeft: 2 }}>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ fontWeight: "bold", mb: 1 }}
-        >
-          {item.title}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          sx={{ color: "#757575", mb: 1 }}
-        >
-          {item.description}
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          {discountPercentage > 0 && (
-            <Typography
-              variant="body2"
-              sx={{
-                textDecoration: "line-through",
-                color: "#9e9e9e",
-                fontSize: "0.85rem",
-              }}
-            >
-              Rs. {price.toFixed(2)}
-            </Typography>
-          )}
-          <Typography variant="h6" sx={{ fontWeight: "bold", color: "black" }}>
-            Rs. {finalPrice.toFixed(2)}
+      <Box sx={{ flexGrow: 1 }}>
+        <Stack spacing={1} pl={2} pr={2}>
+          <Typography variant="h6" fontWeight="bold">
+            {item.title}
           </Typography>
-        </Box>
+          <Typography variant="body2" color="text.secondary">
+            {item.description}
+          </Typography>
+          <Stack spacing={0.5}>
+            {discountPercentage > 0 && (
+              <Typography
+                variant="body2"
+                sx={{
+                  textDecoration: "line-through",
+                  color: "text.disabled",
+                  fontSize: "0.85rem",
+                }}
+              >
+                Rs. {price.toFixed(2)}
+              </Typography>
+            )}
+            <Typography variant="h6" fontWeight="bold">
+              Rs. {finalPrice.toFixed(2)}
+            </Typography>
+          </Stack>
+        </Stack>
       </Box>
-      <IconButton onClick={onRemove} sx={{ color: "#d32f2f", marginLeft: 2 }}>
+      <IconButton onClick={onRemove} color="secondary">
         <RemoveCircleOutlineIcon />
       </IconButton>
     </Card>

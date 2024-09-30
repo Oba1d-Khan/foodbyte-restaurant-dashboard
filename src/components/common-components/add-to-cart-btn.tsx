@@ -49,23 +49,13 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ cartFoodItem }) => {
       <Tooltip title="Add to Cart" arrow>
         <Button
           variant="contained"
-          sx={{
-            backgroundColor: "#388e3c",
-            color: "white",
-            borderRadius: "50%",
-            minWidth: 48,
-            minHeight: 48,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            "&:hover": {
-              backgroundColor: "#388e4d",
-            },
-          }}
+          color="success"
+          size="small"
           onClick={handleAddToCart}
-        >
-          <AddIcon fontSize="small" />
-        </Button>
+          aria-label="Add to Cart"
+          startIcon={<AddIcon />}
+          sx={{ borderRadius: "50px", py: 1, px: 2 }}
+        />
       </Tooltip>
 
       <Snackbar
@@ -77,21 +67,17 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ cartFoodItem }) => {
         <Alert
           onClose={handleSnackbarClose}
           severity="success"
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
+          variant="filled"
         >
-          <Box>
+          <Box textAlign="center">
             {snackbarMessage}
             <Link
               href="/cart"
               color="inherit"
               underline="none"
-              sx={{ display: "block", mt: 1, fontWeight: "bold" }}
+              display="block"
+              fontWeight="bold"
+              mt={1}
             >
               View Cart
             </Link>

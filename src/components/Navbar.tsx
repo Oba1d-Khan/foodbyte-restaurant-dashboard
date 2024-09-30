@@ -19,8 +19,7 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import FoodItemModal from "@/src/components/add-foodItem-modal";
-import { useCart } from "@/src/context/CartContext"; // Correct path to your CartProvider
-import { IFoodItem } from "@/src/types/IFoodItem";
+import { useCart } from "@/src/context/CartContext";
 
 const sections = [
   "Featured",
@@ -65,21 +64,14 @@ const Navbar: React.FC = () => {
   const drawer = (
     <Box
       onClick={handleDrawerToggle}
-      sx={{
-        textAlign: "center",
-        py: 2,
-        overflowY: "auto",
-        height: "100vh",
-        backgroundColor: "#f5f5f5",
-        ...scrollbarStyles,
-      }}
+      textAlign="center"
+      py={2}
+      overflow="auto"
+      height="100vh"
+      bgcolor="#f5f5f5"
+      sx={scrollbarStyles}
     >
-      <Typography
-        variant="h4"
-        sx={{ mb: 2 }}
-        color="#388e3c"
-        fontWeight="semibold"
-      >
+      <Typography variant="h4" mb={2} color="#388e3c" fontWeight="semibold">
         FoodMart
       </Typography>
       <List>
@@ -94,7 +86,7 @@ const Navbar: React.FC = () => {
                 margin: 2,
                 padding: 2,
                 boxShadow: 1,
-                backgroundColor: "transparent",
+                bgcolor: "transparent",
                 "&:hover": {
                   boxShadow: 4,
                   transform: "scale(1.02)",
@@ -129,23 +121,22 @@ const Navbar: React.FC = () => {
             FoodMart
           </Typography>
 
-          {/* WhatsApp Button */}
           <Tooltip title="Chat with us on WhatsApp">
             <Link href="https://wa.me/+923151272630" passHref target="_blank">
               <Button
-                sx={{
-                  backgroundColor: "white",
-                  color: "#388e3c",
-                  "&:hover": {
-                    backgroundColor: "#b4fab7",
-                    scale: "1.1",
-                  },
-                  border: "1px solid #388e3c",
-                  borderRadius: "500px",
-                  mr: 2,
-                }}
                 variant="outlined"
                 startIcon={<WhatsAppIcon sx={{ color: "#388e3c" }} />}
+                sx={{
+                  bgcolor: "white",
+                  color: "#388e3c",
+                  borderRadius: "500px",
+                  borderColor: "#388e3c",
+                  mr: 2,
+                  "&:hover": {
+                    bgcolor: "#b4fab7",
+                    scale: "1.1",
+                  },
+                }}
               >
                 Chat Now
               </Button>
@@ -155,52 +146,50 @@ const Navbar: React.FC = () => {
           <Tooltip title="Go to Cart">
             <Link href="/cart" passHref>
               <Button
-                sx={{
-                  backgroundColor: "white",
-                  color: "#388e3c",
-                  "&:hover": {
-                    backgroundColor: "#b4fab7",
-                    scale: "1.1",
-                  },
-                  border: "1px solid #388e3c",
-                  borderRadius: "500px",
-                  pl: 3, // Padding left to keep the spacing
-                  pr: 3, // Add padding right for symmetry
-                  mr: 2, // Margin to the right to keep alignment
-                }}
                 variant="outlined"
                 startIcon={
                   <Badge badgeContent={cartItems.length} color="secondary">
                     <ShoppingCartIcon sx={{ color: "#388e3c" }} />
                   </Badge>
                 }
+                sx={{
+                  bgcolor: "white",
+                  color: "#388e3c",
+                  borderRadius: "500px",
+                  borderColor: "#388e3c",
+                  pl: 3,
+                  pr: 3,
+                  mr: 2,
+                  "&:hover": {
+                    bgcolor: "#b4fab7",
+                    scale: "1.1",
+                  },
+                }}
               />
             </Link>
           </Tooltip>
 
-          {/* Add New Food Item Button */}
           <Tooltip title="Add New Food Item">
             <Button
-              sx={{
-                backgroundColor: "white",
-                color: "#388e3c",
-                "&:hover": {
-                  backgroundColor: "#b4fab7",
-                  scale: "1.1",
-                },
-                border: "1px solid #388e3c",
-                borderRadius: "500px",
-                pl: 3,
-              }}
               variant="outlined"
               startIcon={<AddIcon sx={{ color: "#388e3c" }} />}
               onClick={() => setModalOpen(true)}
+              sx={{
+                bgcolor: "white",
+                color: "#388e3c",
+                borderRadius: "500px",
+                borderColor: "#388e3c",
+                pl: 3,
+                "&:hover": {
+                  bgcolor: "#b4fab7",
+                  scale: "1.1",
+                },
+              }}
             />
           </Tooltip>
         </Toolbar>
       </AppBar>
 
-      {/* Drawer for Mobile Menu */}
       <Drawer
         open={mobileOpen}
         onClose={handleDrawerToggle}
@@ -209,7 +198,6 @@ const Navbar: React.FC = () => {
         {drawer}
       </Drawer>
 
-      {/* Food Item Modal */}
       <FoodItemModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );

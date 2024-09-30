@@ -6,13 +6,12 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { IFoodItem } from "@/src/types/IFoodItem";
-import { ICartItem } from "@/src/types/ICartItem"; // Import the ICartItem interface
+import { ICartItem } from "@/src/types/ICartItem";
 
 interface CartContextType {
   cartItems: ICartItem[];
-  addToCart: (item: IFoodItem) => void; // Adjusted to accept IFoodItem
-  removeFromCart: (itemToRemove: ICartItem) => void; // Adjusted to accept ICartItem
+  addToCart: (item: ICartItem) => void;
+  removeFromCart: (itemToRemove: ICartItem) => void;
   clearCart: () => void;
 }
 
@@ -36,15 +35,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const addToCart = (item: IFoodItem) => {
-    // Calculate final price based on the discount percentage
+  const addToCart = (item: ICartItem) => {
     const finalPrice = item.discountPercentage
-      ? item.price * (1 - item.discountPercentage / 100) // Calculate final price
-      : item.price; // No discount, use original price
+      ? item.price * (1 - item.discountPercentage / 100)
+      : item.price;
 
     const cartItem: ICartItem = {
-      ...item, // Spread the existing item properties
-      finalPrice, // Add the final price
+      ...item,
+      finalPrice,
     };
 
     setCartItems((prevItems) => {
@@ -57,7 +55,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const removeFromCart = (itemToRemove: ICartItem) => {
     setCartItems((prevItems) => {
       const updatedCart = prevItems.filter(
-        (item) => item._id !== itemToRemove._id // Use _id for comparison
+        (item) => item._id !== itemToRemove._id
       );
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;

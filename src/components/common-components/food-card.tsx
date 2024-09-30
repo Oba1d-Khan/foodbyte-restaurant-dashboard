@@ -2,26 +2,21 @@ import React from "react";
 import { Card, CardMedia, Typography, Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import AddToCartButton from "./add-to-cart-btn";
+import { IFoodItem } from "@/src/types/IFoodItem";
 
-interface IFoodCardProps {
-  title: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  discount?: string;
-  image: string;
+interface FoodCardProps {
+  foodItem: IFoodItem;
   showAddToCartButton?: boolean;
 }
 
-const FoodCard: React.FC<IFoodCardProps> = ({
-  title,
-  description,
-  price,
-  originalPrice,
-  discount,
-  image,
+const FoodCard: React.FC<FoodCardProps> = ({
+  foodItem,
   showAddToCartButton = true,
 }) => {
+  const { title, description, price, discountPercentage = 0, image } = foodItem;
+
+  const finalPrice = price * (1 - discountPercentage / 100);
+
   return (
     <Card
       sx={{
@@ -40,7 +35,7 @@ const FoodCard: React.FC<IFoodCardProps> = ({
         },
       }}
     >
-      {discount && (
+      {discountPercentage > 0 && (
         <Box
           sx={{
             position: "absolute",
@@ -53,7 +48,7 @@ const FoodCard: React.FC<IFoodCardProps> = ({
             fontSize: "0.8rem",
           }}
         >
-          {discount} OFF
+          {discountPercentage}% OFF
         </Box>
       )}
 
@@ -103,17 +98,7 @@ const FoodCard: React.FC<IFoodCardProps> = ({
                 }}
               >
                 <Box>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: "1.1rem",
-                      color: "black",
-                    }}
-                  >
-                    Rs. {price}
-                  </Typography>
-                  {originalPrice && (
+                  {discountPercentage > 0 && (
                     <Typography
                       variant="body2"
                       sx={{
@@ -122,17 +107,22 @@ const FoodCard: React.FC<IFoodCardProps> = ({
                         fontSize: "0.85rem",
                       }}
                     >
-                      Rs. {originalPrice}
+                      Rs. {price.toFixed(2)}
                     </Typography>
                   )}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "1.1rem",
+                      color: "black",
+                    }}
+                  >
+                    Rs. {finalPrice.toFixed(2)}
+                  </Typography>
                 </Box>
                 {showAddToCartButton && (
-                  <AddToCartButton
-                    title={title}
-                    price={price}
-                    image={image}
-                    description={description}
-                  />
+                  <AddToCartButton cartFoodItem={foodItem} />
                 )}
               </Box>
             </Box>

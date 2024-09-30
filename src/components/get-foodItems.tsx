@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import FoodCard from "./food-card";
+import FoodCard from "./common-components/food-card";
 
 const GetFoodItems: React.FC = () => {
   const [foodItems, setFoodItems] = useState<any[]>([]);
@@ -24,13 +24,7 @@ const GetFoodItems: React.FC = () => {
     <Grid container spacing={2} sx={{ mt: 4 }}>
       {foodItems.map((item) => (
         <Grid item xs={12} sm={6} md={4} key={item._id}>
-          <FoodCard
-            title={item.title}
-            description={item.description}
-            price={item.price}
-            image={item.image}
-            discount={item.discount}
-          />
+          <FoodCard foodItem={foodItems} />
         </Grid>
       ))}
     </Grid>

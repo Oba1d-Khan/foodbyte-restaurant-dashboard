@@ -17,14 +17,7 @@ import { useRouter } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import CartItemCard from "@/src/components/cart-item-card";
-
-type TItemProps = {
-  title: string;
-  price: string;
-  image: string;
-  description: string;
-  discount?: string;
-};
+import { ICartItem } from "@/src/types/ICartItem";
 
 const CartPage = () => {
   const { cartItems, clearCart, removeFromCart } = useCart();
@@ -33,6 +26,9 @@ const CartPage = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    console.log("Cart Items:", cartItems);
+  }, [cartItems]);
   const handleGoBack = () => {
     router.push("/");
   };
@@ -43,7 +39,8 @@ const CartPage = () => {
     setSnackbarOpen(true);
   };
 
-  const handleRemoveFromCart = (item: TItemProps) => {
+  const handleRemoveFromCart = (item: ICartItem) => {
+    // Use ICartItem type here
     removeFromCart(item);
     setSnackbarMessage(`${item.title} removed from cart!`);
     setSnackbarOpen(true);
@@ -126,17 +123,19 @@ const CartPage = () => {
           </Typography>
         ) : (
           <Grid container spacing={3}>
-            {cartItems.map((item, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <CartItemCard
-                  title={item.title}
-                  description={item.description}
-                  price={item.price}
-                  image={item.image}
-                  onRemove={() => handleRemoveFromCart(item)}
-                />
-              </Grid>
-            ))}
+            {cartItems.map(
+              (
+                item: ICartItem,
+                index // Use ICartItem here
+              ) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <CartItemCard
+                    item={item} // Pass the whole item
+                    onRemove={() => handleRemoveFromCart(item)}
+                  />
+                </Grid>
+              )
+            )}
           </Grid>
         )}
 

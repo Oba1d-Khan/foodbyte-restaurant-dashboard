@@ -17,6 +17,31 @@ const foodItemSchema = new Schema({
     type: Number,
     required: true,
   },
+  discountPercentage: {
+    type: Number,
+    default: 0,
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: [
+      "Burgers",
+      "Sandwiches",
+      "Wraps",
+      "Fries",
+      "Beverages",
+      "Donuts",
+      "Coffee",
+      "Milkshakes",
+      "Lemonades",
+      "Teas",
+      "Extra",
+    ],
+  },
+  isFeatured: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const FoodItem = models.FoodItem || model("FoodItem", foodItemSchema);

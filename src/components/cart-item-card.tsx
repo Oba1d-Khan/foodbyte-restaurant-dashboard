@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { ICartItem } from "@/src/types/ICartItem";
+import { roundToNearestTen } from "@/src/utils/priceUtils";
 
 interface ICartItemCardProps {
   item: ICartItem;
@@ -18,8 +19,9 @@ interface ICartItemCardProps {
 const CartItemCard: React.FC<ICartItemCardProps> = ({ item, onRemove }) => {
   const price = item.price ?? 0;
   const discountPercentage = item.discountPercentage ?? 0;
-  const finalPrice =
-    discountPercentage > 0 ? price * (1 - discountPercentage / 100) : price;
+  const finalPrice = roundToNearestTen(
+    discountPercentage > 0 ? price * (1 - discountPercentage / 100) : price
+  );
 
   return (
     <Card
@@ -56,11 +58,11 @@ const CartItemCard: React.FC<ICartItemCardProps> = ({ item, onRemove }) => {
                   fontSize: "0.85rem",
                 }}
               >
-                Rs. {price.toFixed(2)}
+                Rs. {price}
               </Typography>
             )}
             <Typography variant="h6" fontWeight="bold">
-              Rs. {finalPrice.toFixed(2)}
+              Rs. {finalPrice}
             </Typography>
           </Stack>
         </Stack>

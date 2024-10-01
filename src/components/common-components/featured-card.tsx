@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 import AddToCartButton from "./add-to-cart-btn";
 import { IFoodItem } from "@/src/types/IFoodItem";
-
+import { roundToNearestTen } from "@/src/utils/priceUtils";
 interface IFeaturedItemProps {
   featuredFoodItem: IFoodItem;
   showAddToCartButton?: boolean;
@@ -21,7 +21,7 @@ const FeaturedCard: React.FC<IFeaturedItemProps> = ({
     category,
   } = featuredFoodItem || {};
 
-  const finalPrice = price * (1 - discountPercentage / 100);
+  const finalPrice = roundToNearestTen(price * (1 - discountPercentage / 100));
 
   return (
     <Card
@@ -92,7 +92,7 @@ const FeaturedCard: React.FC<IFeaturedItemProps> = ({
                   fontSize: "0.85rem",
                 }}
               >
-                Rs. {price.toFixed(2)}
+                Rs. {price}
               </Typography>
             )}
             <Typography
@@ -103,7 +103,7 @@ const FeaturedCard: React.FC<IFeaturedItemProps> = ({
                 color: "black",
               }}
             >
-              Rs. {finalPrice.toFixed(2)}{" "}
+              Rs. {finalPrice}{" "}
             </Typography>
           </Box>
           {showAddToCartButton && (

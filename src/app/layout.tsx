@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { CartProvider } from "@/src/context/CartContext";
+import "@uploadthing/react/styles.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,6 +33,5 @@ export default function RootLayout({
         </body>
       </CartProvider>
     </html>
-
   );
 }

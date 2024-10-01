@@ -19,6 +19,8 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import AddIcon from "@mui/icons-material/Add";
+import ImageUpload from "@/src/components/image-upload";
+import Image from "next/image";
 
 const categories = [
   "Burgers",
@@ -55,6 +57,10 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({ open, onClose }) => {
   const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageUpload = (url: string) => {
+    setFormData({ ...formData, image: url });
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,14 +132,21 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({ open, onClose }) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          height="100%"
+          height="100vh"
         >
           <Box
             p={4}
             bgcolor="background.paper"
             borderRadius={2}
             boxShadow={3}
-            width={{ xs: "90%", sm: "400px" }}
+            sx={{
+              width: { xs: "95%", sm: "700px" },
+              maxHeight: "90vh",
+              overflowY: "auto",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
           >
             <Stack spacing={2}>
               <Stack
@@ -146,78 +159,100 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({ open, onClose }) => {
                   <ClearIcon />
                 </IconButton>
               </Stack>
-              <TextField
-                label="Title"
-                name="title"
-                fullWidth
-                value={formData.title}
-                onChange={handleTextFieldChange}
-                required
-              />
-              <TextField
-                label="Description"
-                name="description"
-                fullWidth
-                value={formData.description}
-                onChange={handleTextFieldChange}
-                required
-              />
-              <TextField
-                label="Image URL"
-                name="image"
-                fullWidth
-                value={formData.image}
-                onChange={handleTextFieldChange}
-                required
-              />
-              <TextField
-                label="Price (Rs.)"
-                name="price"
-                type="number"
-                fullWidth
-                value={formData.price}
-                onChange={handleTextFieldChange}
-                required
-              />
-              <TextField
-                label="Discount (%)"
-                name="discountPercentage"
-                type="number"
-                fullWidth
-                value={formData.discountPercentage}
-                onChange={handleTextFieldChange}
-              />
-              <FormControl fullWidth required>
-                <InputLabel id="category-label">Category</InputLabel>
-                <Select
-                  labelId="category-label"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleSelectChange}
-                  label="Category"
-                  required
-                >
-                  {categories.map((category) => (
-                    <MenuItem key={category} value={category}>
-                      {category}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.featured}
-                    onChange={handleCheckboxChange}
-                    name="featured"
+
+              <Stack direction="row" spacing={2}>
+                <Stack spacing={2} flex={1}>
+                  <TextField
+                    label="Title"
+                    name="title"
+                    fullWidth
+                    value={formData.title}
+                    onChange={handleTextFieldChange}
+                    required
                   />
-                }
-                label="Featured"
-              />
+                  <TextField
+                    label="Description"
+                    name="description"
+                    fullWidth
+                    value={formData.description}
+                    onChange={handleTextFieldChange}
+                    required
+                  />
+                  <TextField
+                    label="Price (Rs.)"
+                    name="price"
+                    type="number"
+                    fullWidth
+                    value={formData.price}
+                    onChange={handleTextFieldChange}
+                    required
+                  />
+                  <TextField
+                    label="Discount (%)"
+                    name="discountPercentage"
+                    type="number"
+                    fullWidth
+                    inputProps={{ min: 0 }}
+                    value={formData.discountPercentage}
+                    onChange={handleTextFieldChange}
+                  />
+                  <FormControl fullWidth required>
+                    <InputLabel id="category-label">Category</InputLabel>
+                    <Select
+                      labelId="category-label"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleSelectChange}
+                      label="Category"
+                      required
+                    >
+                      {categories.map((category) => (
+                        <MenuItem key={category} value={category}>
+                          {category}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={formData.featured}
+                        onChange={handleCheckboxChange}
+                        name="featured"
+                      />
+                    }
+                    label="Featured"
+                  />
+                </Stack>
+
+                <Stack spacing={2} flex={1} alignItems="center">
+                  <ImageUpload setImageUrl={handleImageUpload} />
+                  {formData.image && (
+                    <Box display="flex" alignItems="start" gap={1}>
+                      <Image
+                        src={formData.image}
+                        alt="Uploaded preview"
+                        width={260}
+                        height={160}
+                        style={{ objectFit: "cover", borderRadius: 8 }}
+                      />
+                      <IconButton
+                        color="primary"
+                        sx={{ objectFit: "cover" }}
+                        onClick={() => setFormData({ ...formData, image: "" })}
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                    </Box>
+                  )}
+                </Stack>
+              </Stack>
+
               <Button
                 variant="contained"
                 onClick={handleSubmit}
                 startIcon={<AddIcon />}
+                sx={{ alignSelf: "center", width: "fit-content", mt: 2 }}
               >
                 Add Item
               </Button>

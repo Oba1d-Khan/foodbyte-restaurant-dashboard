@@ -11,7 +11,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
       <Typography
         variant="h4"
         sx={{
-          bgcolor: "#388e3c",
+          bgcolor: "#248027",
           color: "white",
           fontWeight: "bold",
           py: 2,

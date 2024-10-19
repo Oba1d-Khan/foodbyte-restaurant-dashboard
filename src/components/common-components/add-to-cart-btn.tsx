@@ -53,8 +53,13 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ cartFoodItem }) => {
           size="small"
           onClick={handleAddToCart}
           aria-label="Add to Cart"
-          startIcon={<AddIcon />}
-          sx={{ borderRadius: "50px", py: 1, px: 2 }}
+          startIcon={<AddIcon sx={{ pl: 1 }} />}
+          sx={{
+            width: 50,
+            height: 48,
+            borderRadius: "50%",
+            minWidth: 0,
+          }}
         />
       </Tooltip>
 

@@ -29,6 +29,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
         boxShadow: 1,
         backgroundColor: "#ffffff",
         position: "relative",
+        height: "140px",
         "&:hover": {
           boxShadow: 3,
           transform: "translateY(-4px)",
@@ -38,6 +39,8 @@ const FoodCard: React.FC<FoodCardProps> = ({
     >
       {discountPercentage > 0 && (
         <Box
+          fontSize={"0.8rem"}
+          fontWeight={"bold"}
           sx={{
             position: "absolute",
             top: 10,
@@ -46,90 +49,102 @@ const FoodCard: React.FC<FoodCardProps> = ({
             color: "white",
             padding: "0.5rem",
             borderRadius: "4px",
-            fontSize: "0.8rem",
           }}
         >
           {discountPercentage}% OFF
         </Box>
       )}
 
-      <Box sx={{ width: "100%" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={5}>
-            <CardMedia
-              component="img"
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={5}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CardMedia
+            component="img"
+            sx={{
+              borderRadius: 1.2,
+              height: "140px",
+              maxWidth: "180px",
+              objectFit: "cover",
+            }}
+            image={image}
+            alt={title}
+          />
+        </Grid>
+        <Grid item xs={7} sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ flex: 1 }}>
+            <Typography
+              variant="h6"
+              component="div"
+              fontSize={"1rem"}
+              sx={{ fontWeight: "bold", mb: 1 }}
+              lineHeight="1.2"
+              letterSpacing={0}
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              fontSize={"0.85rem"}
               sx={{
-                borderRadius: 1,
-                width: "140px",
-                height: "140px",
-                objectFit: "cover",
+                color: "#757575",
+                mb: 1,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
               }}
-              image={image}
-              alt={title}
-            />
-          </Grid>
-          <Grid item xs={7}>
+            >
+              {description}
+            </Typography>
+          </Box>
+          <Box sx={{ mt: "auto", pt: 1 }}>
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
                 justifyContent: "space-between",
-                height: "100%",
+                alignItems: "center",
               }}
             >
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ fontWeight: "bold", mb: 1 }}
-              >
-                {title}
-              </Typography>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                sx={{ color: "#757575", fontSize: "0.9rem", mb: 2 }}
-              >
-                {description}
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Box>
-                  {discountPercentage > 0 && (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        textDecoration: "line-through",
-                        color: "#9e9e9e",
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      Rs. {price}
-                    </Typography>
-                  )}
+              <Box>
+                {discountPercentage > 0 && (
                   <Typography
-                    variant="h6"
+                    variant="body2"
                     sx={{
-                      fontWeight: "bold",
-                      fontSize: "1.1rem",
-                      color: "black",
+                      textDecoration: "line-through",
+                      color: "#9e9e9e",
+                      fontSize: "0.85rem",
                     }}
                   >
-                    Rs. {finalPrice}
+                    Rs. {price}
                   </Typography>
-                </Box>
-                {showAddToCartButton && (
-                  <AddToCartButton cartFoodItem={foodItem} />
                 )}
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "1.1rem",
+                    color: "black",
+                  }}
+                >
+                  Rs. {finalPrice}
+                </Typography>
               </Box>
+              {showAddToCartButton && (
+                <AddToCartButton cartFoodItem={foodItem} />
+              )}
             </Box>
-          </Grid>
+          </Box>
         </Grid>
-      </Box>
+      </Grid>
     </Card>
   );
 };

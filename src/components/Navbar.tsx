@@ -16,7 +16,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import AddIcon from "@mui/icons-material/Add";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import Link from "next/link";
 import FoodItemModal from "@/src/components/add-foodItem-modal";
 import { useCart } from "@/src/context/CartContext";
@@ -44,7 +44,7 @@ const scrollbarStyles = {
     background: "#a1f7a5",
   },
   "&::-webkit-scrollbar-thumb": {
-    backgroundColor: "#388e3c",
+    backgroundColor: "#248027",
     borderRadius: "10px",
     "&:hover": {
       backgroundColor: "#3cbb47",
@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
       sx={scrollbarStyles}
     >
       <Typography variant="h4" mb={2} color="#388e3c" fontWeight="semibold">
-        FoodMart
+        CafeByte
       </Typography>
       <List>
         {sections.map((section) => (
@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={{ backgroundColor: "#388e3c" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#248027" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
-            FoodMart
+            CafeByte
           </Typography>
 
           <Tooltip title="Chat with us on WhatsApp">
@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
                   borderRadius: "500px",
                   borderColor: "#388e3c",
                   pl: 3,
-                  pr: 3,
+                  pr: 2,
                   mr: 2,
                   "&:hover": {
                     bgcolor: "#b4fab7",
@@ -168,24 +168,23 @@ const Navbar: React.FC = () => {
               />
             </Link>
           </Tooltip>
-
           <Tooltip title="Add New Food Item">
             <Button
               variant="outlined"
-              startIcon={<AddIcon sx={{ color: "#388e3c" }} />}
               onClick={() => setModalOpen(true)}
               sx={{
                 bgcolor: "white",
                 color: "#388e3c",
-                borderRadius: "500px",
+                borderRadius: "50px",
                 borderColor: "#388e3c",
-                pl: 3,
                 "&:hover": {
                   bgcolor: "#b4fab7",
                   scale: "1.1",
                 },
               }}
-            />
+            >
+              <AddBusinessIcon sx={{ color: "#388e3c" }} />
+            </Button>
           </Tooltip>
         </Toolbar>
       </AppBar>

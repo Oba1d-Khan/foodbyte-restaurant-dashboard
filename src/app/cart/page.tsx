@@ -58,7 +58,7 @@ const CartPage = () => {
   return (
     <Container maxWidth="lg">
       <Stack spacing={4} mt={2} mb={4}>
-        <Box bgcolor="success.main" color="white" py={2} borderRadius={2}>
+        <Box bgcolor="#248027" color="white" py={2} borderRadius={2}>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -91,7 +91,7 @@ const CartPage = () => {
                   },
                 }}
               >
-                <DeleteIcon color="error" />
+                <DeleteIcon />
               </IconButton>
             </Tooltip>
           </Stack>

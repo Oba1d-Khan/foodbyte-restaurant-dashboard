@@ -8,7 +8,7 @@ export const GET = async () => {
     const foodItems = await FoodItem.find({});
 
     return new NextResponse(JSON.stringify(foodItems), { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     return (
       new NextResponse("Error in fetching data" + error.message),
       { status: 500 }
@@ -27,7 +27,7 @@ export const POST = async (request: Request) => {
       JSON.stringify({ message: "Food Item Added", foodItem: newFoodItem }),
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     return (
       new NextResponse("Error in submitting data" + error.message),
       {

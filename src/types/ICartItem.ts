@@ -6,4 +6,5 @@ export interface ICartItem {
   price: number;
   discountPercentage?: number;
   finalPrice?: number;
+  quantity: number;
 }

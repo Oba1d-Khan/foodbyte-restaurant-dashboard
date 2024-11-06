@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
-import AddToCartButton from "./add-to-cart-btn";
+import AddToCartButton from "../cart/add-to-cart-btn";
 import { IFoodItem } from "@/src/types/IFoodItem";
 import { roundToNearestTen } from "@/src/utils/priceUtils";
 interface IFeaturedItemProps {
@@ -64,7 +64,7 @@ const FeaturedCard: React.FC<IFeaturedItemProps> = ({
               position: "absolute",
               top: 10,
               left: 10,
-              backgroundColor: "#ff5722",
+              backgroundColor: "#B93241",
               color: "white",
               padding: "0.5rem",
               borderRadius: "4px",

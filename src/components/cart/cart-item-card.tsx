@@ -1,35 +1,41 @@
 import React from "react";
-import { Card, CardMedia, Typography, Box } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import AddToCartButton from "./add-to-cart-btn";
-import { IFoodItem } from "@/src/types/IFoodItem";
+import {
+  Card,
+  CardMedia,
+  Typography,
+  Box,
+  IconButton,
+  Tooltip,
+  Grid,
+} from "@mui/material";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { ICartItem } from "@/src/types/ICartItem";
 import { roundToNearestTen } from "@/src/utils/priceUtils";
 
-interface FoodCardProps {
-  foodItem: IFoodItem;
-  showAddToCartButton?: boolean;
+interface ICartItemCardProps {
+  item: ICartItem;
+  onRemove: () => void;
 }
 
-const FoodCard: React.FC<FoodCardProps> = ({
-  foodItem,
-  showAddToCartButton = true,
-}) => {
-  const { title, description, price, discountPercentage = 0, image } = foodItem;
-
-  const finalPrice = roundToNearestTen(price * (1 - discountPercentage / 100));
+const CartItemCard: React.FC<ICartItemCardProps> = ({ item, onRemove }) => {
+  const price = item.price ?? 0;
+  const discountPercentage = item.discountPercentage ?? 0;
+  const finalPrice = roundToNearestTen(
+    discountPercentage > 0 ? price * (1 - discountPercentage / 100) : price
+  );
 
   return (
     <Card
+      variant="outlined"
       sx={{
         display: "flex",
         flexDirection: "column",
         borderRadius: 2,
         overflow: "hidden",
         padding: 2,
-        boxShadow: 1,
+        boxShadow: 0.5,
         backgroundColor: "#ffffff",
         position: "relative",
-        height: "140px",
         "&:hover": {
           boxShadow: 3,
           transform: "translateY(-4px)",
@@ -37,6 +43,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
         },
       }}
     >
+      {/* Discount Badge */}
       {discountPercentage > 0 && (
         <Box
           fontSize={"0.8rem"}
@@ -45,7 +52,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
             position: "absolute",
             top: 10,
             left: 10,
-            backgroundColor: "#ff5722",
+            backgroundColor: "#B93241",
             color: "white",
             padding: "0.5rem",
             borderRadius: "4px",
@@ -73,12 +80,13 @@ const FoodCard: React.FC<FoodCardProps> = ({
               maxWidth: "180px",
               objectFit: "cover",
             }}
-            image={image}
-            alt={title}
+            image={item.image}
+            alt={item.title}
           />
         </Grid>
+
         <Grid item xs={7} sx={{ display: "flex", flexDirection: "column" }}>
-          <Box sx={{ flex: 1 }}>
+          <Box sx={{ flex: 1, maxWidth: "90%" }}>
             <Typography
               variant="h6"
               component="div"
@@ -87,7 +95,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
               lineHeight="1.2"
               letterSpacing={0}
             >
-              {title}
+              {item.title}
             </Typography>
             <Typography
               variant="body2"
@@ -103,7 +111,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
                 WebkitBoxOrient: "vertical",
               }}
             >
-              {description}
+              {item.description}
             </Typography>
           </Box>
           <Box sx={{ mt: "auto", pt: 1 }}>
@@ -138,9 +146,19 @@ const FoodCard: React.FC<FoodCardProps> = ({
                   Rs. {finalPrice}
                 </Typography>
               </Box>
-              {showAddToCartButton && (
-                <AddToCartButton cartFoodItem={foodItem} />
-              )}
+              <Tooltip title="Remove Item From Cart">
+                <IconButton
+                  onClick={onRemove}
+                  color="error"
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                  }}
+                >
+                  <RemoveCircleOutlineIcon />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
         </Grid>
@@ -149,4 +167,4 @@ const FoodCard: React.FC<FoodCardProps> = ({
   );
 };
 
-export default FoodCard;
+export default CartItemCard;

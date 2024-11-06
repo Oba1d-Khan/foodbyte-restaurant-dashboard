@@ -7,15 +7,26 @@ interface SectionHeaderProps {
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
   return (
-    <Box sx={{ mt: 8, mb: 4, textAlign: "center" }}>
+    <Box
+      height={120}
+      alignContent={"center"}
+      sx={{
+        mt: 10,
+        mb: 4,
+        textAlign: "center",
+        backgroundImage: "url('/images/bg-doodle.png') ",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundColor: "#D9E89A",
+        borderRadius: 3,
+      }}
+    >
       <Typography
         variant="h4"
+        color="#1E3932"
         sx={{
-          bgcolor: "#248027",
-          color: "white",
           fontWeight: "bold",
-          py: 2,
-          borderRadius: 1,
           fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
         }}
       >

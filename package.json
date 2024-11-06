@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,19 +14,26 @@
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
     "@uploadthing/react": "^7.0.2",
+    "jose": "^5.9.6",
     "mongodb": "^6.9.0",
     "mongoose": "^8.6.4",
-    "next": "14.2.13",
-    "react": "^18",
-    "react-dom": "^18",
-    "uploadthing": "^7.0.2"
+    "next": "15.0.2",
+    "react": "19.0.0-rc-4d577fd2-20241104",
+    "react-dom": "19.0.0-rc-4d577fd2-20241104",
+    "react-scroll": "^1.9.0",
+    "uploadthing": "^7.0.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.13",
+    "eslint-config-next": "15.0.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }

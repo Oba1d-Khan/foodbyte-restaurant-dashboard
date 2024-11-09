@@ -17,7 +17,7 @@ import { useCart } from "@/src/context/CartContext";
 import { useRouter } from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import CartItemCard from "@/src/components/cart-item-card";
+import CartItemCard from "@/src/components/cart/cart-item-card";
 import { ICartItem } from "@/src/types/ICartItem";
 
 const CartPage = () => {
@@ -58,7 +58,7 @@ const CartPage = () => {
   return (
     <Container maxWidth="lg">
       <Stack spacing={4} mt={2} mb={4}>
-        <Box bgcolor="#248027" color="white" py={2} borderRadius={2}>
+        <Box bgcolor="#1E3932" color="#D9E89A" py={2} borderRadius={2}>
           <Stack
             direction="row"
             justifyContent="space-between"

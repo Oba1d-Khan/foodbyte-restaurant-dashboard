@@ -1,28 +1,19 @@
 import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-
-const secretKey = process.env.SESSION_SECRET;
-const encodedKey = new TextEncoder().encode(secretKey);
-
-export async function createSession(userId: string) {
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const session = await encrypt({ userId, expiresAt });
-
-  cookies().set("session", session, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-  });
-}
-
-export async function deleteSession() {
-  cookies().delete("session");
-}
+import { redirect } from "next/navigation";
 
 type SessionPayload = {
   userId: string;
   expiresAt: Date;
+};
+
+const encodedKey = new TextEncoder().encode(process.env.SESSION_SECRET);
+
+const cookie = {
+  name: "session",
+  options: { httpOnly: true, secure: true, sameSite: "lax", path: "/" },
+  duration: 24 * 60 * 60 * 1000, // 1 day
 };
 
 export async function encrypt(payload: SessionPayload) {
@@ -41,5 +32,34 @@ export async function decrypt(session: string | undefined = "") {
     return payload;
   } catch (error) {
     console.log("Failed to verify session");
+    return null;
   }
+}
+
+// After user successfully login or signup
+export async function createSession(userId: string) {
+  const expiresAt = new Date(Date.now() + cookie.duration);
+  const session = await encrypt({ userId, expiresAt });
+  // (await cookies()).set(cookie.name, session, { ...cookie.options, expiresAt });
+  await cookies().set("session", session, {
+    httpOnly: true,
+    secure: true,
+    expires: expiresAt,
+  });
+  redirect("/");
+}
+
+export async function verifySession() {
+  const cookie = (await cookies()).get(cookie.name)?.value;
+  const session = await decrypt(cookie);
+  if (!session?.userId) {
+    redirect("/login");
+  }
+
+  return { userId: session.userId };
+}
+
+export async function deleteSession() {
+  (await cookies()).delete("session");
+  redirect("/login");
 }

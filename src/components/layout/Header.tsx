@@ -12,7 +12,6 @@ import {
   IconButton,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import LogoutIcon from "@mui/icons-material/Logout";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import Link from "next/link";
@@ -21,6 +20,7 @@ import FoodItemModal from "@/src/components/dashboard/add-foodItem-modal";
 import CartSidebar from "@/src/components/cart/cart-sidebar";
 import { useTheme } from "@mui/material/styles";
 import { logout } from "@/src/app/(auth)/login/actions";
+import { Logout } from "@mui/icons-material";
 
 const Header: React.FC = () => {
   const { cartItems } = useCart();
@@ -70,7 +70,6 @@ const Header: React.FC = () => {
               </IconButton>
             </Tooltip>
             <CartSidebar open={isCartOpen} onClose={handleCartToggle} />
-
             <Tooltip title="Add New Food Item">
               <Button
                 aria-label="add new food item"
@@ -90,7 +89,6 @@ const Header: React.FC = () => {
                 <AddBusinessIcon sx={{ color: "#388e3c" }} />
               </Button>
             </Tooltip>
-
             <Tooltip title="Chat with us on WhatsApp">
               <Link href="https://wa.me/+923151272630" passHref target="_blank">
                 <Button
@@ -113,12 +111,13 @@ const Header: React.FC = () => {
                 </Button>
               </Link>
             </Tooltip>
+            {/* <LogoutButton /> */}
             <Tooltip title="Logout">
               <Link href="/login" passHref>
                 <Button
-                  startIcon={<LogoutIcon sx={{ color: "#388e3c" }} />}
+                  startIcon={<Logout sx={{ color: "#388e3c" }} />}
                   variant="outlined"
-                  onClick={() => logout()}
+                  onClick={logout}
                   sx={{
                     bgcolor: "white",
                     color: "#388e3c",

@@ -1,84 +1,168 @@
 "use client";
 
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Container,
+  Paper,
+  InputAdornment,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+  CircularProgress,
+  Link as MuiLink,
+} from "@mui/material";
 import { useActionState } from "react";
 import { login } from "./actions";
 import { useFormStatus } from "react-dom";
+import { Visibility, VisibilityOff, Email, Lock } from "@mui/icons-material";
+import Link from "next/link";
 
 export default function LoginForm() {
   const [state, loginAction] = useActionState(login, undefined);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-      flexDirection={"column"}
-    >
-      <Typography variant="h4" component="h1" fontWeight={"bold"} py={2}>
-        Login
-      </Typography>
+    <Container component="main" maxWidth="xs">
       <Box
-        component="form"
-        action={loginAction}
         sx={{
-          maxWidth: 300,
-          width: "100%",
+          height: "100vh",
           display: "flex",
           flexDirection: "column",
-          gap: 2,
-          padding: 6,
-          border: 1,
-          borderRadius: 1,
-          borderColor: "grey.400",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <div>
-          <input
-            id="email"
-            name="email"
-            placeholder="Email"
-            style={{
-              padding: "8px",
-              width: "100%",
-              borderRadius: "4px",
-              border: state?.errors?.email ? "1px solid red" : "1px solid #ccc",
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#f5f5f5",
+            borderRadius: 2,
+          }}
+        >
+          <Typography
+            component="h1"
+            variant={isSmallScreen ? "h5" : "h4"}
+            sx={{
+              mb: 3,
+              color: "#1E3932",
+              fontWeight: "bold",
             }}
-          />
-          {state?.errors?.email && (
-            <Typography color="error" variant="body2">
-              {state.errors.email}
-            </Typography>
-          )}
-        </div>
-
-        <div>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Password"
-            style={{
-              padding: "8px",
-              width: "100%",
-              borderRadius: "4px",
-              border: state?.errors?.password
-                ? "1px solid red"
-                : "1px solid #ccc",
-            }}
-          />
-          {state?.errors?.password && (
-            <Typography color="error" variant="body2">
-              {state.errors.password}
-            </Typography>
-          )}
-        </div>
-
-        <SubmitButton />
+          >
+            FoodByte Login
+          </Typography>
+          <Box
+            component="form"
+            action={loginAction}
+            noValidate
+            sx={{ mt: 1, width: "100%" }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              error={!!state?.errors?.email}
+              helperText={state?.errors?.email}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email sx={{ color: "#388e3c" }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#388e3c",
+                  },
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#388e3c",
+                },
+              }}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              autoComplete="current-password"
+              error={!!state?.errors?.password}
+              helperText={state?.errors?.password}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock sx={{ color: "#388e3c" }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#388e3c",
+                  },
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#388e3c",
+                },
+              }}
+            />
+            <SubmitButton />
+            <Box sx={{ mt: 2, textAlign: "center" }}>
+              <Typography variant="body2">
+                Don&apos;t have an account?
+                <Link href="/signup" passHref>
+                  <MuiLink
+                    component="span"
+                    sx={{
+                      pl: 1,
+                      color: "#388e3c",
+                      textDecoration: "none",
+                      fontWeight: "medium",
+                      "&:hover": {
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
+                    Sign up here
+                  </MuiLink>
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Paper>
       </Box>
-    </Box>
+    </Container>
   );
 }
 
@@ -88,13 +172,28 @@ function SubmitButton() {
   return (
     <Button
       type="submit"
-      variant="contained"
-      color="primary"
-      disabled={pending}
       fullWidth
-      sx={{ mt: 2 }}
+      variant="contained"
+      disabled={pending}
+      sx={{
+        mt: 3,
+        mb: 2,
+        bgcolor: "#388e3c",
+        color: "white",
+        "&:hover": {
+          bgcolor: "#1E3932",
+          color: "#b4fab7",
+        },
+        borderRadius: "10px",
+        padding: "10px",
+        fontWeight: "bold",
+      }}
     >
-      {pending ? "Logging in..." : "Login"}
+      {pending ? (
+        <CircularProgress size={24} sx={{ color: "white" }} />
+      ) : (
+        "Login"
+      )}
     </Button>
   );
 }

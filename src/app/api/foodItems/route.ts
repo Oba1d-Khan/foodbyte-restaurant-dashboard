@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import connect from "@/lib/db";
-import FoodItem from "@/lib/modals/FoodItem";
+import connect from "@/src/lib/db";
+import FoodItem from "@/src/lib/models/FoodItem";
 
 export const GET = async () => {
   try {

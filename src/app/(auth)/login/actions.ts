@@ -1,15 +1,14 @@
 "use server";
-
 import { z } from "zod";
 import { createSession, deleteSession } from "../../lib/session";
 import { redirect } from "next/navigation";
+import User from "@/src/lib/models/User";
+import connect from "@/src/lib/db";
+import bcryptjs from "bcryptjs";
 
-const testUser = {
-  id: "1",
-  email: "contact@oksolutions.com",
-  password: "123456",
-};
-
+// connect db
+await connect();
+// Zod Validation schema for login
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim(),
   password: z
@@ -18,6 +17,7 @@ const loginSchema = z.object({
     .trim(),
 });
 
+// Login function
 export async function login(prevState: unknown, formAction: FormData) {
   const result = loginSchema.safeParse(Object.fromEntries(formAction));
 
@@ -29,7 +29,10 @@ export async function login(prevState: unknown, formAction: FormData) {
 
   const { email, password } = result.data;
 
-  if (email !== testUser.email || password !== testUser.password) {
+  // Find user by email
+  const user = await User.findOne({ email }).select("+password");
+
+  if (!user) {
     return {
       errors: {
         email: "Invalid email or password",
@@ -37,11 +40,25 @@ export async function login(prevState: unknown, formAction: FormData) {
     };
   }
 
-  await createSession(testUser.id);
+  // Verify the password
+  const isPasswordValid = await bcryptjs.compare(password, user.password);
 
+  if (!isPasswordValid) {
+    return {
+      errors: {
+        password: "Invalid email or password",
+      },
+    };
+  }
+
+  // Create a session
+  await createSession(user._id);
+
+  // Redirect to the home page
   redirect("/");
 }
+
+// Logout function
 export async function logout() {
   await deleteSession();
-  redirect("/login");
 }

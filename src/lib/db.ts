@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -21,9 +22,10 @@ const connect = async () => {
       bufferCommands: true,
     });
     console.log("Connected");
-  } catch (err: any) {
-    console.log("Error: ", err);
-    throw new Error("Error", err);
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    console.log("Error: ", errorMessage);
+    throw new Error(errorMessage);
   }
 };
 

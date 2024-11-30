@@ -2,6 +2,7 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getErrorMessage } from "@/src/utils/getErrorMessage";
 
 type SessionPayload = {
   userId: string;
@@ -30,8 +31,9 @@ export async function decrypt(session: string | undefined = "") {
       algorithms: ["HS256"],
     });
     return payload;
-  } catch (error) {
-    console.log("Failed to verify session");
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    console.log("Failed to verify session" + errorMessage);
     return null;
   }
 }
@@ -41,7 +43,7 @@ export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + cookie.duration);
   const session = await encrypt({ userId, expiresAt });
   // (await cookies()).set(cookie.name, session, { ...cookie.options, expiresAt });
-  await cookies().set("session", session, {
+  (await cookies()).set("session", session, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
@@ -50,8 +52,8 @@ export async function createSession(userId: string) {
 }
 
 export async function verifySession() {
-  const cookie = (await cookies()).get(cookie.name)?.value;
-  const session = await decrypt(cookie);
+  const cookieSession = (await cookies()).get(cookie.name)?.value;
+  const session = await decrypt(cookieSession);
   if (!session?.userId) {
     redirect("/login");
   }

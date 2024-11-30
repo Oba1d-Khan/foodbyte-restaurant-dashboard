@@ -1,5 +1,6 @@
 import connect from "@/src/lib/db";
 import User from "@/src/lib/models/User";
+import { getErrorMessage } from "@/src/utils/getErrorMessage";
 import { NextRequest, NextResponse } from "next/server";
 
 connect();
@@ -19,7 +20,6 @@ export async function POST(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: "Invalid Token" }, { status: 400 });
     }
-    console.log(user);
 
     user.isVerified = true;
     user.verifyToken = undefined;
@@ -30,7 +30,8 @@ export async function POST(request: NextRequest) {
       { message: "Email verified successfully!", success: true },
       { status: 200 }
     );
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

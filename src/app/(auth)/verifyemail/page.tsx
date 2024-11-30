@@ -1,10 +1,18 @@
 "use client";
-
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button, Typography, Box, CircularProgress } from "@mui/material";
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { getErrorMessage } from "@/src/utils/getErrorMessage";
 
 export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
+
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const router = useRouter();
@@ -38,7 +46,9 @@ export default function VerifyEmailPage() {
       } else {
         setError(result.error);
       }
-    } catch (err) {
+    } catch (error: unknown) {
+      const errorMessage = getErrorMessage(error);
+      console.log(errorMessage);
       setError("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);

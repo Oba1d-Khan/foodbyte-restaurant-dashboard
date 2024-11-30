@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/src/context/CartContext";
 import "@uploadthing/react/styles.css";
 import Header from "../components/layout/Header";
+import { AuthProvider } from "../context/AuthContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,12 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <CartProvider>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <Header />
-          {children}
-        </body>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <body className={`${geistSans.variable} ${geistMono.variable}`}>
+            <Header />
+            {children}
+          </body>
+        </CartProvider>
+      </AuthProvider>
     </html>
   );
 }

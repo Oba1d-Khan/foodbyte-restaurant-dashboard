@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connect from "@/src/lib/db";
 import FoodItem from "@/src/lib/models/FoodItem";
+import { getErrorMessage } from "@/src/utils/getErrorMessage";
 
 export const GET = async () => {
   try {
@@ -8,11 +9,11 @@ export const GET = async () => {
     const foodItems = await FoodItem.find({});
 
     return new NextResponse(JSON.stringify(foodItems), { status: 200 });
-  } catch (error) {
-    return (
-      new NextResponse("Error in fetching data" + error.message),
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    return new NextResponse("Error in fetching data: " + errorMessage, {
+      status: 500,
+    });
   }
 };
 
@@ -27,9 +28,11 @@ export const POST = async (request: Request) => {
       JSON.stringify({ message: "Food Item Added", foodItem: newFoodItem }),
       { status: 200 }
     );
-  } catch (error) {
-    return (
-      new NextResponse("Error in submitting data" + error.message),
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+
+    return new NextResponse(
+      "Error in fetching data: " + { error: errorMessage },
       {
         status: 500,
       }

@@ -1,7 +1,19 @@
 import nodemailer from "nodemailer";
 import User from "../lib/models/User";
 import bcryptjs from "bcryptjs";
-export const sendEmail = async ({ email, emailType, userId }: any) => {
+import { getErrorMessage } from "./getErrorMessage";
+
+interface ISendEmailParams {
+  email: string;
+  emailType: "VERIFY" | "RESET";
+  userId: string;
+}
+
+export const sendEmail = async ({
+  email,
+  emailType,
+  userId,
+}: ISendEmailParams) => {
   try {
     // configure email for usage
     const oneHour = 3600000;
@@ -48,7 +60,8 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     return emailResponse;
 
     // console.log("Message sent: %s", info.messageId);
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessage(error);
+    throw new Error(errorMessage);
   }
 };

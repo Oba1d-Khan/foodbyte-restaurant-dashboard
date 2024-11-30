@@ -52,7 +52,9 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({ open, onClose }) => {
   if (!open) return null;
 
   const handleTextFieldChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -125,7 +127,7 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({ open, onClose }) => {
       <div
         style={{
           position: "fixed",
-          top: 0,
+          top: 100,
           left: 0,
           right: 0,
           bottom: 0,
@@ -141,7 +143,7 @@ const FoodItemModal: React.FC<FoodItemModalProps> = ({ open, onClose }) => {
           style={{
             backgroundColor: "white",
             borderRadius: "8px",
-            padding: "32px",
+            padding: "14px 24px",
             maxWidth: "700px",
             width: "90%",
             maxHeight: "90vh",

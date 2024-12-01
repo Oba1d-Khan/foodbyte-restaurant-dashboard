@@ -21,8 +21,8 @@
     "mongoose": "^8.6.4",
     "next": "15.0.2",
     "nodemailer": "^6.9.16",
-    "react": "19.0.0-rc-4d577fd2-20241104",
-    "react-dom": "19.0.0-rc-4d577fd2-20241104",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-scroll": "^1.9.0",
     "uploadthing": "^7.0.2",
     "zod": "^3.23.8"
@@ -32,15 +32,10 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.16",
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@types/react-dom": "^18.3.1",
     "@types/react-scroll": "^1.8.10",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
     "typescript": "^5"
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }

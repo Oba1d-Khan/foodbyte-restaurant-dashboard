@@ -21,8 +21,11 @@ import CartSidebar from "@/src/components/cart/cart-sidebar";
 import { useTheme } from "@mui/material/styles";
 import { logout } from "@/src/app/(auth)/login/actions";
 import { Logout } from "@mui/icons-material";
+import { usePathname } from "next/navigation";
 
 const Header: React.FC = () => {
+  const pathname = usePathname();
+  const isAuthRoute = pathname === "/login" || pathname === "/signup";
   const { cartItems } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,16 +37,39 @@ const Header: React.FC = () => {
   };
 
   return (
-    <>
-      <AppBar sx={{ backgroundColor: "#1E3932", padding: "0px 10px" }}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography
-            variant={isSmallScreen ? "h5" : "h4"}
-            sx={{ color: "#b4fab7", fontWeight: "bold" }}
-          >
-            FoodByte.
-          </Typography>
+    <AppBar sx={{ backgroundColor: "#1E3932", padding: "0px 10px" }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography
+          variant={isSmallScreen ? "h5" : "h4"}
+          sx={{ color: "#b4fab7", fontWeight: "bold" }}
+        >
+          FoodByte.
+        </Typography>
 
+        {isAuthRoute ? (
+          <Tooltip title="Chat with us on WhatsApp">
+            <Link href="https://wa.me/+923151272630" passHref target="_blank">
+              <Button
+                aria-label="chat with us on WhatsApp"
+                variant="outlined"
+                startIcon={<WhatsAppIcon sx={{ color: "#388e3c" }} />}
+                sx={{
+                  bgcolor: "white",
+                  color: "#388e3c",
+                  borderRadius: "10px",
+                  borderColor: "#388e3c",
+                  fontWeight: "medium",
+                  "&:hover": {
+                    bgcolor: "#b4fab7",
+                    scale: "1.1",
+                  },
+                }}
+              >
+                {!isSmallScreen && "Chat Now"}
+              </Button>
+            </Link>
+          </Tooltip>
+        ) : (
           <Box
             sx={{
               display: "flex",
@@ -111,7 +137,6 @@ const Header: React.FC = () => {
                 </Button>
               </Link>
             </Tooltip>
-            {/* <LogoutButton /> */}
             <Tooltip title="Logout">
               <Link href="/login" passHref>
                 <Button
@@ -133,11 +158,11 @@ const Header: React.FC = () => {
               </Link>
             </Tooltip>
           </Box>
-        </Toolbar>
-      </AppBar>
+        )}
+      </Toolbar>
 
       <FoodItemModal open={modalOpen} onClose={() => setModalOpen(false)} />
-    </>
+    </AppBar>
   );
 };
 

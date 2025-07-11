@@ -6,6 +6,7 @@ import { getErrorMessage } from "@/src/utils/getErrorMessage";
 
 type SessionPayload = {
   userId: string;
+  role: string;
   expiresAt: Date;
 };
 
@@ -39,10 +40,9 @@ export async function decrypt(session: string | undefined = "") {
 }
 
 // After user successfully login or signup
-export async function createSession(userId: string) {
+export async function createSession(userId: string, role: string) {
   const expiresAt = new Date(Date.now() + cookie.duration);
-  const session = await encrypt({ userId, expiresAt });
-  // (await cookies()).set(cookie.name, session, { ...cookie.options, expiresAt });
+  const session = await encrypt({ userId, role, expiresAt });
   (await cookies()).set("session", session, {
     httpOnly: true,
     secure: true,
@@ -57,8 +57,7 @@ export async function verifySession() {
   if (!session?.userId) {
     redirect("/login");
   }
-
-  return { userId: session.userId };
+  return { userId: session.userId, role: session.role };
 }
 
 export async function deleteSession() {

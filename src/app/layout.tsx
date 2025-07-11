@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { CartProvider } from "@/src/context/CartContext";
 import "@uploadthing/react/styles.css";
-import Header from "../components/layout/Header";
 import { AuthProvider } from "../context/AuthContext";
+import ClientLayout from "./ClientLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,12 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <CartProvider>
-          <body className={`${geistSans.variable} ${geistMono.variable}`}>
-            <Header />
-            {children}
-          </body>
-        </CartProvider>
+        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+          <ClientLayout>{children}</ClientLayout>
+        </body>
       </AuthProvider>
     </html>
   );

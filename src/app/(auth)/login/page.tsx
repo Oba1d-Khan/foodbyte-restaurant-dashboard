@@ -20,12 +20,41 @@ import { login } from "./actions";
 import { useFormStatus } from "react-dom";
 import { Visibility, VisibilityOff, Email, Lock } from "@mui/icons-material";
 import Link from "next/link";
+import { useAuth } from "@/src/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [state, loginAction] = useActionState(login, undefined);
   const [showPassword, setShowPassword] = React.useState(false);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { login: authLogin } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    // If login was successful (no errors and not pending), fetch user profile
+    if (state && !state.errors) {
+      (async () => {
+        const res = await fetch("/api/profile", { method: "POST" });
+        if (res.ok) {
+          const data = await res.json();
+          console.log("/api/profile response:", data);
+          if (data && data.data) {
+            authLogin({
+              username: data.data.username,
+              email: data.data.email,
+              role: data.data.role,
+            });
+            console.log("Setting AuthContext with role:", data.data.role);
+            // Optionally redirect or reload to show admin features
+            router.refresh();
+          }
+        } else {
+          console.log("/api/profile error:", res.status);
+        }
+      })();
+    }
+  }, [state]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

@@ -52,7 +52,7 @@ export async function login(prevState: unknown, formAction: FormData) {
   }
 
   // Create a session
-  await createSession(user._id);
+  await createSession(user._id, user.role);
 
   // Redirect to the home page
   redirect("/");

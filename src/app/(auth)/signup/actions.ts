@@ -38,6 +38,7 @@ export async function signup(state: unknown, formData: FormData) {
     username,
     email,
     password: hashedPassword,
+    role: "user", // Explicitly set role
   });
 
   const user = await newUser.save();
@@ -45,7 +46,7 @@ export async function signup(state: unknown, formData: FormData) {
   await sendEmail({ email, emailType: "VERIFY", userId: user._id });
 
   // 3. Create session
-  await createSession(user.id);
+  await createSession(user._id, user.role);
 
   return { message: "Signup successful!", success: true };
 }

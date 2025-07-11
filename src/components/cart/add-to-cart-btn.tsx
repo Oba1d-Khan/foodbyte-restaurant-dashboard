@@ -4,6 +4,7 @@ import { Button, Tooltip, Snackbar, Alert, Link, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useCart } from "@/src/context/CartContext";
 import { IFoodItem } from "@/src/types/IFoodItem";
+import { createPortal } from "react-dom";
 
 interface AddToCartButtonProps {
   cartFoodItem: IFoodItem;
@@ -62,33 +63,36 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ cartFoodItem }) => {
           }}
         />
       </Tooltip>
-
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="success"
-          variant="filled"
-        >
-          <Box textAlign="center">
-            {snackbarMessage}
-            <Link
-              href="/cart"
-              color="inherit"
-              underline="none"
-              display="block"
-              fontWeight="bold"
-              mt={1}
+      {typeof window !== "undefined" &&
+        createPortal(
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleSnackbarClose}
+              severity="success"
+              variant="filled"
             >
-              View Cart
-            </Link>
-          </Box>
-        </Alert>
-      </Snackbar>
+              <Box textAlign="center">
+                {snackbarMessage}
+                <Link
+                  href="/cart"
+                  color="inherit"
+                  underline="none"
+                  display="block"
+                  fontWeight="bold"
+                  mt={1}
+                >
+                  View Cart
+                </Link>
+              </Box>
+            </Alert>
+          </Snackbar>,
+          document.body
+        )}
     </>
   );
 };
